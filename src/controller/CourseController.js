@@ -14,7 +14,20 @@ const createCourse = async (req, res) => {
 
 const getDetailCourse = async (req, res) => {
   try {
-    let response = await CourseService.getDetailCourse(req.body);
+    let response = await CourseService.getDetailCourse(req.headers.id);
+    return res.status(200).json(response);
+  } catch (e) {
+    console.log("error", e);
+    return res.status(200).json({
+      status: "ERROR",
+      message: "Error from server...",
+    });
+  }
+};
+
+const getAllCourse = async (req, res) => {
+  try {
+    let response = await CourseService.getAllCourse();
     return res.status(200).json(response);
   } catch (e) {
     return res.status(200).json({
@@ -52,4 +65,5 @@ module.exports = {
   getDetailCourse,
   editCourse,
   deleteCourse,
+  getAllCourse,
 };

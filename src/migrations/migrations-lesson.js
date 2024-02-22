@@ -1,4 +1,7 @@
 "use strict";
+
+const db = require("../models");
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -6,7 +9,6 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
 
@@ -21,6 +23,7 @@ module.exports = {
       courseId: {
         allowNull: false,
         type: Sequelize.STRING,
+        references: { model: "Courses", key: "courseId" },
       },
       urlLesson: {
         allowNull: false,

@@ -3,7 +3,6 @@ import db from "../models/index";
 const createCourse = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(!data.name, !data.courseId, !data.urlIntro);
       if (!data.name || !data.courseId || !data.urlIntro) {
         resolve({
           status: "ERROR",
@@ -23,11 +22,13 @@ const createCourse = (data) => {
           });
         } else {
           await db.Course.create({
-            name: data.name,
+            name: data.name.toUpperCase(),
             courseId: data.courseId,
             image: data.image !== "" ? data.image : "",
+            description: data.description,
             urlIntro: data.urlIntro,
             lessonCount: data.lessonCount || 0,
+            price: data.price || 0,
           });
           resolve({
             status: "OK",
@@ -44,9 +45,8 @@ const createCourse = (data) => {
 const getDetailCourse = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("data", data);
       let courseData = await db.Course.findOne({
-        where: { courseId: data.courseId },
+        where: { courseId: data.toUpperCase() },
       });
       if (!courseData) {
         resolve({
@@ -57,6 +57,33 @@ const getDetailCourse = (data) => {
         resolve({
           status: "OK",
           message: "Get detail's course is success!!",
+          data: courseData,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+const getAllCourse = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let courseData = await db.Course.findAll();
+      if (!courseData) {
+        resolve({
+          status: "ERROR",
+          message: "The course ís not found!!",
+        });
+      } else {
+        if (courseData && courseData.length > 0) {
+          courseData.map((item) => {
+            item.image = Buffer.from(item.image, "base64").toString("binary");
+          });
+        }
+        resolve({
+          status: "OK",
+          message: "Get all courses is successful!!",
           data: courseData,
         });
       }
@@ -123,4 +150,5 @@ module.exports = {
   getDetailCourse,
   editCourse,
   deleteCourse,
+  getAllCourse,
 };

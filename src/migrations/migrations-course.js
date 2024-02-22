@@ -6,7 +6,6 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
       //   name: DataTypes.STRING,
@@ -20,6 +19,7 @@ module.exports = {
       courseId: {
         type: Sequelize.STRING,
         allowNull: false,
+        primaryKey: true,
       },
       image: {
         type: Sequelize.BLOB("long"),
@@ -29,8 +29,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         // allowNull: false,
       },
+      description: {
+        allowNull: false,
+        type: Sequelize.TEXT("long"),
+      },
       urlIntro: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      price: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {

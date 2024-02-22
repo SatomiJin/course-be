@@ -5,6 +5,7 @@ let router = express.Router();
 
 router.post("/create-course", authMiddleWare, CourseController.createCourse);
 router.get("/get-detail-course", CourseController.getDetailCourse);
+router.get("/get-all-course", CourseController.getAllCourse);
 router.put("/update-course", authMiddleWare, CourseController.editCourse);
 router.delete("/delete-course", authMiddleWare, CourseController.deleteCourse);
 module.exports = router;

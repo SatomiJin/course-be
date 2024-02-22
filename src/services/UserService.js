@@ -154,7 +154,7 @@ const updateUser = (data) => {
         await checkUser.save();
         resolve({
           status: "OK",
-          message: "update user success!!!",
+          message: "The updated user was successful!!!",
         });
       }
     } catch (e) {
